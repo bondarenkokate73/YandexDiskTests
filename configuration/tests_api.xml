@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="SuiteTestsUi">
+    <test name="GetInformationAboutDiskTests">
+        <classes>
+            <class name="tests.apiTests.GetInformationAboutDiskTest"/>
+        </classes>
+    </test>
+    <test name="FolderTests">
+        <classes>
+            <class name="tests.apiTests.FolderTest"/>
+        </classes>
+    </test>
+    <test name="FilesTests">
+        <classes>
+            <class name="tests.apiTests.FilesTest"/>
+        </classes>
+    </test>
+</suite>

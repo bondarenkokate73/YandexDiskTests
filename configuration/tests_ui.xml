@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="SuiteTestsUi">
+    <test name="NavigationTests">
+        <classes>
+            <class name="tests.uiTests.NavigateToPagesTest"/>
+        </classes>
+    </test>
+    <test name="SearchTests">
+        <classes>
+            <class name="tests.uiTests.SearchTest"/>
+        </classes>
+    </test>
+    <test name="DownloadFilesTest">
+        <classes>
+            <class name="tests.uiTests.DownloadFilesTest"/>
+        </classes>
+    </test>
+    <test name="CreateFolderTest">
+        <classes>
+            <class name="tests.uiTests.CreateFolderTest"/>
+        </classes>
+    </test>
+    <test name="ContextMenuTest">
+        <classes>
+            <class name="tests.uiTests.ContextMenuTest"/>
+        </classes>
+    </test>
+    <test name="ExtraElementsTest">
+        <classes>
+            <class name="tests.uiTests.ExtraElementsTest"/>
+        </classes>
+    </test>
+</suite>
