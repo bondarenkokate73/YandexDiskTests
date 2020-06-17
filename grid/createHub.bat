@@ -1,0 +1,1 @@
+java -jar selenium-server-standalone-3.141.59.jar -role hub -port 4445 -timeout 3000 -browserTimeout 3600 -hubConfig hubConfig.json
