@@ -6,14 +6,8 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pagesAndElements.*;
 
-/**
- *
- */
 public class NavigateToPagesTest extends UiBaseTest {
 
-    /**
-     * Test navigate last page
-     */
     @Description("Uc02 - Просмотр страницы «Последние»")
     @Test
     public void navigateLastPageTest() {
@@ -31,9 +25,6 @@ public class NavigateToPagesTest extends UiBaseTest {
         softAssert.assertAll();
     }
 
-    /**
-     * Test navigate last page
-     */
     @Description("Uc03 - Просмотр страницы «Файлы»")
     @Test
     public void navigateFilesPageTest() {
@@ -51,9 +42,6 @@ public class NavigateToPagesTest extends UiBaseTest {
         softAssert.assertAll();
     }
 
-    /**
-     * Test navigate photo page
-     */
     @Description("Uc04 - Просмотр страницы «Фото»")
     @Test
     public void navigatePhotosPageTest() {
@@ -71,9 +59,6 @@ public class NavigateToPagesTest extends UiBaseTest {
         softAssert.assertAll();
     }
 
-    /**
-     * Test navigate albums page
-     */
     @Description("Uc05 - Просмотр страницы «Альбомы»")
     @Test
     public void navigateAlbumsPageTest() {
@@ -91,9 +76,6 @@ public class NavigateToPagesTest extends UiBaseTest {
         softAssert.assertAll();
     }
 
-    /**
-     * Test navigate public access page
-     */
     @Description("Uc06 - Просмотр страницы «Общий доступ»")
     @Test
     public void navigatePublicAccessPageTest() {
@@ -111,9 +93,6 @@ public class NavigateToPagesTest extends UiBaseTest {
         softAssert.assertAll();
     }
 
-    /**
-     * Test navigate history page
-     */
     @Description("Uc07 - Просмотр страницы «История»")
     @Test
     public void navigateHistoryPageTest() {
@@ -131,9 +110,6 @@ public class NavigateToPagesTest extends UiBaseTest {
         softAssert.assertAll();
     }
 
-    /**
-     * Test navigate archive page
-     */
     @Description("Uc08 - Просмотр страницы «Архив»")
     @Test
     public void navigateArchivePageTest() {
@@ -151,9 +127,6 @@ public class NavigateToPagesTest extends UiBaseTest {
         softAssert.assertAll();
     }
 
-    /**
-     * Test navigate trash page
-     */
     @Description("Uc09 - Просмотр страницы «Корзина»")
     @Test
     public void navigateTrashPageTest() {
@@ -171,9 +144,6 @@ public class NavigateToPagesTest extends UiBaseTest {
         softAssert.assertAll();
     }
 
-    /**
-     * Test navigate download page
-     */
     @Description("Uc10 - Просмотр страницы «Загрузки»")
     @Test
     public void navigateDownloadPageTest() {

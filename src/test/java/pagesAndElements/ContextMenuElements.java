@@ -1,175 +1,172 @@
 package pagesAndElements;
 
 import helpers.Waiters;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 public class ContextMenuElements {
 
-    /**
-     * Драйвер.
-     */
     private WebDriver driver;
 
-    /**
-     * Кнопка Поделиться.
-     */
-    @FindBy(css = "div.resources-action-bar__side-right > span > button")
-    private WebElement buttonShareElement;
+    @FindBy(css = ".hover-tooltip__tooltip-anchor > button")
+    private List<WebElement> buttonsGroupableElement;
 
-    /**
-     * Кнопка Скачать.
-     */
-    @FindBy(css = "div.resources-action-bar__side-right > button")
-    private WebElement buttonDownloadElement;
-
-    /**
-     *
-     */
-    @FindBy(css = "div.groupable-buttons > div > span > div > button")
-    private WebElement[] buttonsGroupableElement;
-
-    /**
-     * Контекстное меню кнопки поделиться.
-     */
     @FindBy(css = "div.share-link-menu__outer-wrapper")
     private WebElement shareMenuElement;
 
-    /**
-     * Ссылка на опубликованный элемент.
-     */
     @FindBy(css = "input.publish-resource-tumbler__input")
     private WebElement publishLinkElement;
 
-    /**
-     * Сообщение об ошибке.
-     */
     @FindBy(css = "div.error__title")
     private WebElement errorMessageElement;
 
-    /**
-     * Папка для перемещения.
-     */
-    @FindBy(css = "div[data-key='view=treeWrap'] > div > div > div")
-    private WebElement[] folderTransferElement;
+    @FindBy(css = "div.b-tree__name")
+    private List<WebElement> folderTransferElement;
 
-    /**
-     * Кнопка Переместить в окне выбора папки для перемещения.
-     */
     @FindBy(css = ".confirmation-dialog__footer > button")
-    private WebElement[] buttonModalWindowElement;
+    private List<WebElement> buttonModalWindowElement;
 
-    /**
-     * Конструктор контекстного меню.
-     *
-     * @param driver Драйвер.
-     */
+    @FindBy(css = "div.resources-action-bar__body")
+    public WebElement contextBarElement;
+
+    @FindBy(xpath = "//button[.//span//text()='Удалить']")
+    public WebElement buttonDeleteElement;
+
+    @FindBy(xpath = "//button[.//span//text()='Переместить']")
+    public List<WebElement> buttonTransferElement;
+
+    @FindBy(xpath = "//button[.//span//text()='Копировать']")
+    public WebElement buttonCopyElement;
+
+    @FindBy(xpath = "//button[.//span//text()='Переименовать']")
+    public WebElement buttonRenameElement;
+
+    @FindBy(xpath = "//button[.//span//text()='Скачать']")
+    public WebElement buttonDownloadElement;
+
+    @FindBy(xpath = "//button[.//span//text()='Поделиться']")
+    public WebElement buttonShareElement;
+
+    @FindBy(xpath = "//button[.//span//text()='Копировать']")
+    public List<WebElement> buttonCopyApproveElement;
+
+    @FindBy(xpath = "//button[.//span//text()='Продолжить']")
+    public WebElement buttonContinueElement;
+
     public ContextMenuElements(final WebDriver driver) {
         this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
-    /**
-     * Нажатие кнопки Поделиться.
-     */
+    @Step("Нажатие кнопки Поделиться")
     public void clickButtonShare() {
+        Waiters.waitUntilElementToBeClickable(buttonShareElement, driver);
         buttonShareElement.click();
     }
 
-    /**
-     * Нажатие кнопки Скачать.
-     */
+    @Step("Нажатие кнопки Скачать")
     public void clickButtonDownload() {
+        Waiters.waitUntilElementToBeClickable(buttonDownloadElement, driver);
         buttonDownloadElement.click();
     }
 
-    /**
-     * Нажатие кнопки Переименовать.
-     */
+    @Step("Нажатие кнопки Переименовать")
     public void clickButtonRename() {
-        buttonsGroupableElement[0].click();
+        Waiters.waitUntilElementToBeClickable(buttonRenameElement, driver);
+        buttonRenameElement.click();
     }
 
-    /**
-     * Нажатие кнопки Переместить.
-     */
+    @Step("Нажатие кнопки Переместить")
     public ContextMenuElements clickButtonTransfer() {
-        buttonsGroupableElement[1].click();
+        Waiters.waitUntilElementToBeClickable(buttonTransferElement.get(0), driver);
+        buttonTransferElement.get(0).click();
         return this;
     }
 
-    /**
-     * Нажатие кнопки Удалить.
-     */
+    @Step("Нажатие кнопки Удалить")
     public void clickButtonDelete() {
-        buttonsGroupableElement[2].click();
+        Waiters.waitUntilElementToBeClickable(buttonDeleteElement, driver);
+        buttonDeleteElement.click();
     }
 
-    /**
-     * Нажатие кнопки Копировать.
-     */
+    @Step("Нажатие кнопки Копировать")
     public ContextMenuElements clickButtonCopy() {
-        buttonsGroupableElement[3].click();
+        Waiters.waitUntilElementToBeClickable(buttonCopyElement, driver);
+        buttonCopyElement.click();
         return this;
     }
 
-    /**
-     * Проверка появления меню после нажатия кнопки поделиться.
-     */
+    @Step("Проверка появления меню после нажатия кнопки поделиться")
     public Boolean isContextMenuVisible() {
         Waiters.waitUntilVisibility(
                 shareMenuElement, driver);
         return shareMenuElement.isDisplayed();
     }
 
-    /**
-     * Получение ссылки на опубликованный элемент.
-     */
+    @Step("Получение ссылки на опубликованный элемент")
     public String getPublishLink() {
         return publishLinkElement
-                .getAttribute("readonly value");
+                .getAttribute("value");
     }
 
-    /**
-     * Проверка наличия ошибки на страницк опубликованного файла.
-     */
-    public Boolean isErrorMessageVisible(final String url) {
-        Waiters.waitUntilUrlContainsText(url, driver);
-        return errorMessageElement.isDisplayed();
+    @Step("Проверка наличия ошибки на странице опубликованного файла")
+    public Boolean isPublicLink(final String link) {
+        Waiters.waitUntilUrlContainsText("yadi.sk", driver);
+        return link.contains("yadi.sk");
     }
 
-    /**
-     * Выбор папки для перемещения.
-     */
-    public ContextMenuElements selectTransferFolder() {
+    @Step("Выбор папки для перемещения")
+    public ContextMenuElements selectTransferFolder(final String nameFolder) {
+        WebElement folder = getFolderByName(folderTransferElement, nameFolder);
         Waiters.waitUntilElementToBeClickable(
-                folderTransferElement[3], driver);
-        folderTransferElement[3].click();
+                folder, driver);
+        folder.click();
         return this;
     }
 
-    /**
-     * Нажатие на кнопку Переместить.
-     */
-    public void clickButtonTransferElement()
-    {
-        buttonModalWindowElement[3].click();
+    @Step("Нажатие на кнопку Переместить")
+    public void clickButtonTransferElement() {
+        buttonTransferElement.get(0).click();
     }
 
-    /**
-     * Нажатие на кнопку Копировать.
-     */
-    public ContextMenuElements clickButtonCopyElement()
-    {
-        buttonModalWindowElement[4].click();
+    @Step("Нажатие на кнопку Копировать")
+    public ContextMenuElements clickButtonCopyElement() {
+        Waiters.waitUntilElementToBeClickable(
+                buttonCopyApproveElement.get(1), driver);
+        buttonCopyApproveElement.get(1).click();
         return this;
     }
 
-    /**
-     * Нажатие на кнопку Продолжить.
-     */
-    public void clickButtonContinueElement()
-    {
-        buttonModalWindowElement[2].click();
+    @Step("Нажатие на кнопку Продолжить")
+    public void clickButtonContinueElement() {
+        buttonContinueElement.click();
+    }
+
+    @Step("Проверка, выбран ли элемент")
+    public Boolean isElementSelected(final WebElement element) {
+        return element.getAttribute("class").contains("selected");
+    }
+
+    @Step("Получение элемента по названию папки")
+    public WebElement getFolderByName(final List<WebElement> folders,
+                                      final String name) {
+        String nameFolder;
+        for (WebElement element : folders) {
+            nameFolder = element.getAttribute("title");
+            if (nameFolder.equals(name)) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+    @Step("Подтверждение пеемещения файла")
+    public void clickButtonTransferInModalWindowElement() {
+        buttonTransferElement.get(1).click();
     }
 }

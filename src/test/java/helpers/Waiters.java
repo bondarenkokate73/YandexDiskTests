@@ -5,8 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.nio.file.WatchEvent;
 import java.util.List;
 
 public class Waiters {
@@ -63,6 +66,12 @@ public class Waiters {
                 });
     }
 
+    public static void waitUntilFileDownload(final File file)
+    {
+        do {
+        } while (!file.exists());
+    }
+
     /**
      * Ожидание, пока в коллекции не появится хоть один элемент.
      *
@@ -77,6 +86,19 @@ public class Waiters {
     }
 
     /**
+     * Ожидание, пока коллекция не станет пустой.
+     *
+     * @param driver  driver
+     * @param element element
+     */
+    public static void waitUntilElementsListEmpty(final WebDriver driver,
+                                                  final By element) {
+        new WebDriverWait(driver, timeout)
+                .until(ExpectedConditions.numberOfElementsToBeLessThan(element,
+                        1));
+    }
+
+    /**
      * Ожидание, пока элемент не появится в коллекции.
      *
      * @param element /
@@ -84,11 +106,11 @@ public class Waiters {
      * @param value   /
      */
     public static void waitUntilCollectionContainsText(final WebDriver driver,
-                                                       final List<WebElement> element,
+                                                       final By element,
                                                        final String value) {
         new WebDriverWait(driver, timeout)
                 .until((ExpectedCondition<Boolean>) driver1 -> {
-                    List<WebElement> elements = element;
+                    List<WebElement> elements = driver1.findElements(element);
                     for (WebElement elem : elements) {
                         if (elem.getText().equals(value)) {
                             return true;
@@ -107,14 +129,13 @@ public class Waiters {
      */
     public static void waitUntilCollectionNotContainsText(
             final WebDriver driver,
-            final By element,
+            final List<WebElement> element,
             final String value) {
         new WebDriverWait(driver, timeout)
                 .until((ExpectedCondition<Boolean>) driver1 -> {
-                    List<WebElement> elements = driver1
-                            .findElements(element);
+                    List<WebElement> elements = element;
                     for (WebElement elem : elements) {
-                        if (elem.getText().equals(value)) {
+                        if (elem.equals(value)) {
                             return false;
                         }
                     }

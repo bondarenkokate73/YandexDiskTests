@@ -2,75 +2,58 @@ package tests.uiTests;
 
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import pagesAndElements.FilesPage;
-import pagesAndElements.FindStaticElements;
-import pagesAndElements.LoginPage;
-import pagesAndElements.StaticElementsForPage;
+import pagesAndElements.*;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 import static helpers.ParametersProvider.getProperty;
+import static helpers.WorkWithDriver.createDriver;
 
-/**
- * Base test for all ui tests
- */
 public class UiBaseTest {
 
-    /**
-     * Драйвер.
-     */
     private WebDriver driver;
 
-    /**
-     *
-     */
     public StaticElementsForPage staticElementsForPage;
 
-    /**
-     *
-     */
     public FindStaticElements findStaticElements;
 
-    /**
-     *
-     */
     public LoginPage loginPage;
 
-    /**
-     *
-     */
     public FilesPage filesPage;
 
-    /**
-     *
-     */
+    public AlbumsPage albumsPage;
+
     public final WebDriver getDriver() {
         return driver;
     }
 
-    /**
-     * Page url.
-     */
     public static final String HOME_PAGE_URL = "https://disk.yandex.ru/client";
 
-    /**
-     * Создание драйвера.
-     * Авторизация.
-     */
+    public final String workDirectory = "C:/Users/Kate/Downloads";
+    public final String workFolder = "UiTestFolder";
+    public WebElement workElement;
+    public ContextMenuElements contextMenuElements;
+    public List<String> filesOnPage;
+
+    public List<String> downloadFiles;
+    public final String path = "C:/";
+    public final String nameFile = "Lancer.jpg";
+    public File file;
+
     @Description("Uc01 - Авторизация в диске")
     @BeforeMethod
     public final void setEnvironment() throws IOException {
-        System.setProperty("webdriver.chrome.bin", "/webdrivers/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver = createDriver();
+        //     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         staticElementsForPage = new StaticElementsForPage(getDriver());
         findStaticElements = new FindStaticElements(getDriver());
+        contextMenuElements = new ContextMenuElements(getDriver());
+        albumsPage = new AlbumsPage(getDriver());
         String adminLogin = getProperty("login");
         String adminPassword = getProperty("password");
         loginPage = new LoginPage(driver);
@@ -85,9 +68,12 @@ public class UiBaseTest {
         }
     }
 
-    /**
-     *
-     */
+/*    @AfterMethod
+    public void goToHomePage()
+    {
+        filesPage.goToPage();
+    }*/
+
     @AfterMethod
     public final void tearDown() {
         driver.quit();

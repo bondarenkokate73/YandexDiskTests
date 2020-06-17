@@ -1,14 +1,13 @@
 package tests.uiTests;
 
+import helpers.Waiters;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import pagesAndElements.ContextMenuElements;
-import pagesAndElements.FilesPage;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -16,93 +15,82 @@ import java.util.Date;
 import java.util.List;
 
 import static helpers.WorkWithDriver.goToPage;
+import static pagesAndElements.FilesPage.FILES_PAGE_URL;
 
 public class ContextMenuTest extends UiBaseTest {
 
-    private final String workDirectory = "C:/Users/Kate/Downloads";
-    private final String workFolder = "TestFolder";
-    private WebElement workElement;
-    private ContextMenuElements contextMenuElements;
-    private List<String> filesOnPage;
-
     @BeforeMethod
     public void goToWorkFolder() {
-        contextMenuElements = new ContextMenuElements(getDriver());
-        goToPage(getDriver(), FilesPage.FILES_PAGE_URL + workFolder);
-        if (!getDriver().getCurrentUrl().contains(workFolder)) {
-            filesPage.createWorkFolder(workFolder);
-            goToPage(getDriver(), FilesPage.FILES_PAGE_URL + workFolder);
+        filesOnPage = staticElementsForPage.getFilesOnPage();
+        if (!staticElementsForPage.isListEqualsElement(filesOnPage, workFolder)) {
+            staticElementsForPage
+                    .clickButtonCreate()
+                    .clickButtonCreateFolder()
+                    .inputNameFolder(workFolder)
+                    .clickButtonSaveFolder();
         }
-        goToPage(getDriver(), "");
         workElement = findStaticElements.getElementOfName(workFolder);
+        workElement.click();
+        Assert.assertTrue(contextMenuElements.isElementSelected(workElement),
+                "Элемент не был выделен.");
     }
 
     @Description("Uc23 - Поделиться элементом")
-    @Test
+    @Test(priority = 5)
     public void shareElementTest() {
         SoftAssert softAssert = new SoftAssert();
-        workElement.click();
         contextMenuElements.clickButtonShare();
         softAssert.assertTrue(
                 contextMenuElements.isContextMenuVisible(),
                 "Контекстное меню с ссылкой не появилось.");
         String publishLink = contextMenuElements.getPublishLink();
-        goToPage(getDriver(), publishLink);
-        softAssert.assertFalse(
-                contextMenuElements.isErrorMessageVisible(publishLink),
+        goToPage(publishLink, getDriver());
+        softAssert.assertTrue(
+                contextMenuElements.isPublicLink(publishLink),
                 "По этой ссылке нет опубликованного файла.");
         softAssert.assertAll();
     }
 
     @Description("Uc24 - Скачать элемент")
-    @Test
+    @Test(priority = 4)
     public void downloadElementTest() {
-        workElement.click();
         contextMenuElements.clickButtonDownload();
-        File file = new File(workDirectory + workFolder + ".zip");
+        File file = new File(workDirectory + "/" + workFolder + ".zip");
+        Waiters.waitUntilFileDownload(file);
         Assert.assertTrue(file.exists(), "Скачанного файла не существует.");
     }
 
     @Description("Uc25 - Переименовать элемент")
-    @Test
+    @Test(priority = 3)
     public void renameElementTest() {
-        final String newNameFolder = "RenameTestFolder";
-        workElement.click();
+        final String newNameFolder = "RenameUiTestFolder";
         contextMenuElements.clickButtonRename();
         staticElementsForPage.inputNameFolder(newNameFolder)
                 .clickButtonSaveFolder();
         filesOnPage = staticElementsForPage.getFilesOnPage(newNameFolder);
         Assert.assertTrue(
-                staticElementsForPage.isListContainsElement(
+                staticElementsForPage.isListEqualsElement(
                         filesOnPage, newNameFolder),
                 "Папки с новым именем на странице найдено не было.");
     }
 
-    @AfterTest
-    public void renameWorkFolder() {
-        workElement.click();
-        contextMenuElements.clickButtonRename();
-        staticElementsForPage.inputNameFolder(workFolder)
-                .clickButtonSaveFolder();
-    }
-
     @Description("Uc26 - Переместить элемент")
-    @Test
+    @Test(priority = 2)
     public void transferElementTest() {
+        String folder = "Folder";
         SoftAssert softAssert = new SoftAssert();
-        workElement.click();
         contextMenuElements.clickButtonTransfer()
-                .selectTransferFolder()
-                .clickButtonTransferElement();
+                .selectTransferFolder(folder)
+                .clickButtonTransferInModalWindowElement();
         filesOnPage = staticElementsForPage.getFilesOnPage();
         softAssert.assertFalse(
-                staticElementsForPage.isListContainsElement(
+                staticElementsForPage.isListEqualsElement(
                         filesOnPage,
                         "Папка осталась на прежнем месте."));
-        goToPage(getDriver(), "disk/Загрузки");
+        goToPage(getDriver(), "disk/" + folder);
         filesOnPage = staticElementsForPage.getFilesOnPage();
         softAssert.assertTrue(
-                staticElementsForPage.isListContainsElement(
+                staticElementsForPage.isListEqualsElement(
                         filesOnPage,
                         workFolder),
                 "Перемещенной папки не существует.");
@@ -110,23 +98,22 @@ public class ContextMenuTest extends UiBaseTest {
     }
 
     @Description("Uc27 - Копировать элемент в то же место")
-    @Test
+    @Test(priority = 1)
     public void copyElementToThisPlaceTest() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.mm.yyyy");
         SoftAssert softAssert = new SoftAssert();
-        workElement.click();
         contextMenuElements.clickButtonCopy()
                 .clickButtonCopyElement()
                 .clickButtonContinueElement();
         filesOnPage = staticElementsForPage.getFilesOnPage();
         softAssert.assertTrue(
-                staticElementsForPage.isListContainsElement(
+                staticElementsForPage.isListEqualsElement(
                         filesOnPage,
                         workFolder),
                 "Скопированной папки не существует.");
         softAssert.assertTrue(
-                staticElementsForPage.isListContainsElement(
+                staticElementsForPage.isListEqualsElement(
                         filesOnPage,
                         workFolder + "_" + simpleDateFormat.format(date)),
                 "Продублированной папки не существует.");
@@ -135,13 +122,38 @@ public class ContextMenuTest extends UiBaseTest {
     @Description("Uc28 - Удалить элемент")
     @Test
     private void deleteElementTest() {
-        workElement.click();
         contextMenuElements.clickButtonDelete();
-        filesOnPage = staticElementsForPage.getFilesOnPage();
+        List<WebElement> filesOnPage = findStaticElements.getFilesOnPage();
         Assert.assertTrue(
-                staticElementsForPage.isListContainsElement(
+                staticElementsForPage.isElementDelete(
                         filesOnPage,
                         workFolder),
                 "Папка не была удалена.");
+    }
+
+    @AfterSuite
+    public void deleteResources() {
+        Boolean flag = true;
+        do {
+            filesOnPage = staticElementsForPage.getFilesOnPage();
+            if (staticElementsForPage.isListContainsElement(filesOnPage, workFolder)) {
+                workElement = findStaticElements.getElementContainsName(workFolder);
+                workElement.click();
+                contextMenuElements.clickButtonDelete();
+            } else {
+                flag = false;
+            }
+        } while (flag);
+        goToPage(getDriver(), FILES_PAGE_URL + "/" + "Folder");
+        do {
+            filesOnPage = staticElementsForPage.getFilesOnPage();
+            if (staticElementsForPage.isListContainsElement(filesOnPage, workFolder)) {
+                workElement = findStaticElements.getElementContainsName(workFolder);
+                workElement.click();
+                contextMenuElements.clickButtonDelete();
+            } else {
+                flag = true;
+            }
+        } while (!flag);
     }
 }

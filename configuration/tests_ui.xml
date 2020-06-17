@@ -12,14 +12,23 @@
             <class name="tests.uiTests.SearchTest"/>
         </classes>
     </test>
-    <test name="DownloadFilesTest">
+    <test name="UploadFilesTest">
         <classes>
-            <class name="tests.uiTests.DownloadFilesTest"/>
+            <class name="tests.uiTests.UploadFileTests.UploadFileTest"/>
+            <class name="tests.uiTests.UploadFileTests.UploadExistsFileTest"/>
         </classes>
     </test>
     <test name="CreateFolderTest">
         <classes>
             <class name="tests.uiTests.CreateFolderTest"/>
+        </classes>
+    </test>
+    <test name="CreateFilesTest">
+        <classes>
+            <class name="tests.uiTests.CreateFilesTests.CreateTextDocTest"/>
+            <class name="tests.uiTests.CreateFilesTests.CreatePresentationTest"/>
+            <class name="tests.uiTests.CreateFilesTests.CreateTableTest"/>
+            <class name="tests.uiTests.CreateFilesTests.CreateAlbumTest"/>
         </classes>
     </test>
     <test name="ContextMenuTest">
@@ -30,6 +39,11 @@
     <test name="ExtraElementsTest">
         <classes>
             <class name="tests.uiTests.ExtraElementsTest"/>
+        </classes>
+    </test>
+    <test name="TrashTest">
+        <classes>
+            <class name="tests.uiTests.TrashTest"/>
         </classes>
     </test>
 </suite>
