@@ -1,20 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="SuiteTestsUi">
-    <test name="GetInformationAboutDiskTests">
+<suite name="SuiteTestsAPI" parallel="tests" thread-count="2">
+    <test name="GetInformationAboutDiskTest">
         <classes>
             <class name="tests.apiTests.GetInformationAboutDiskTest"/>
         </classes>
     </test>
-    <test name="FolderTests">
+    <test name="GetListPublicResourcesTest">
         <classes>
-            <class name="tests.apiTests.FolderTest"/>
+            <class name="tests.apiTests.GetListPublicResourcesTest"/>
+        </classes>
+    </test>
+    <test name="FoldersTests">
+        <classes>
+            <class name="tests.apiTests.FolderTests.CreateFolderTest"/>
+            <class name="tests.apiTests.FolderTests.CreateExistsFolderTest"/>
+            <class name="tests.apiTests.FolderTests.GetInformationAboutFolderTest"/>
+            <class name="tests.apiTests.FolderTests.PublishFolderTest"/>
+            <class name="tests.apiTests.FolderTests.UnpublishFolderTest"/>
+            <class name="tests.apiTests.FolderTests.DeleteFolderTest"/>
+            <class name="tests.apiTests.FolderTests.DeleteNotExistFolderTest"/>
         </classes>
     </test>
     <test name="FilesTests">
         <classes>
-            <class name="tests.apiTests.FilesTest"/>
+            <class name="tests.apiTests.FilesTests.UploadFileTest"/>
+            <class name="tests.apiTests.FilesTests.CopyFileTest"/>
+            <class name="tests.apiTests.FilesTests.GetInformationAboutFileTest"/>
+            <class name="tests.apiTests.FilesTests.GetFilesOnDiskTest"/>
+            <class name="tests.apiTests.FilesTests.PublishFileTest"/>
+            <class name="tests.apiTests.FilesTests.UnpublishFileTest"/>
+            <class name="tests.apiTests.FilesTests.GetLinkForDownloadFileTest"/>
+            <class name="tests.apiTests.FilesTests.DeleteFileTest"/>
+        </classes>
+    </test>
+    <test name="TrashTests">
+        <classes>
+            <class name="tests.apiTests.TrashFiles.CleanTrashTest"/>
+            <class name="tests.apiTests.TrashFiles.CheckExistsFileInTrashTest"/>
+            <class name="tests.apiTests.TrashFiles.RecoveryFileFromTrashTest"/>
         </classes>
     </test>
 </suite>

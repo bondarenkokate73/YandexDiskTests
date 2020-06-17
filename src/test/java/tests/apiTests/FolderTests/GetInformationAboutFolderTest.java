@@ -5,19 +5,24 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import tests.apiTests.ApiBaseTest;
 
+import java.io.IOException;
+
 import static helpers.RestAssuredHelper.getValueFromJson;
 
 public class GetInformationAboutFolderTest extends ApiBaseTest {
 
+    public GetInformationAboutFolderTest() throws IOException {
+    }
+
     @Description("Ac06 - Получение информации о папке")
     @Test
     public void getInformationAboutFolderTest() {
-        folder = "Загрузки";
+        workFolder = "Загрузки";
         response = apiMethods
-                .getInformationAboutFolder(folder);
+                .getInformationAboutFolder(workFolder);
         Assert.assertEquals(response.getStatusCode(), 200,
-                "Запрос вернул код " + response.getStatusCode());
-        Assert.assertEquals(folder,
+                "Запрос вернул код " + response.getStatusCode() + response.asString());
+        Assert.assertEquals(workFolder,
                 getValueFromJson(response, "name"),
                 "Получена некорректная информация.");
     }
@@ -25,11 +30,11 @@ public class GetInformationAboutFolderTest extends ApiBaseTest {
     @Description("Ac07 - Получение информации о несуществующей папке")
     @Test
     public void getInformationAboutNotExistsFolderTest() {
-        folder = "НеведомаяНесуществующаяПапка";
+        workFolder = "НеведомаяНесуществующаяПапка";
         response = apiMethods
-                .getInformationAboutFolder(folder);
+                .getInformationAboutFolder(workFolder);
         Assert.assertEquals(response.getStatusCode(), 404,
-                "Запрос вернул код " + response.getStatusCode());
+                "Запрос вернул код " + response.getStatusCode() + response.asString());
     }
 
 

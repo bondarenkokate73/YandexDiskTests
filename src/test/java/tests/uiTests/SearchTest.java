@@ -28,7 +28,7 @@ public class SearchTest extends UiBaseTest {
                 "Страница не содержит нужного заголовка.");
         List<String> result = staticElementsForPage.getFilesOnPage();
         softAssert.assertTrue(staticElementsForPage
-                        .isListContainsElement(result, textForSearch),
+                        .isListEqualsElement(result, textForSearch),
                 "В результате поиска не было найдено файла с нужным именем.");
         softAssert.assertAll();
     }
@@ -45,7 +45,7 @@ public class SearchTest extends UiBaseTest {
                 "Страница не содержит нужного заголовка.");
         List<String> result = staticElementsForPage.getFilesOnPage();
         softAssert.assertTrue(staticElementsForPage
-                        .isListContainsElement(result, textForSearch),
+                        .isListEqualsElement(result, textForSearch),
                 "В результате поиска не было найдено файла с нужным именем.");
         softAssert.assertAll();
     }
@@ -54,11 +54,11 @@ public class SearchTest extends UiBaseTest {
     @Test
     public void searchNotExistFileTest() {
         SoftAssert softAssert = new SoftAssert();
-        final String textForSearch = "Ульяновск.jpg";
+        final String textForSearch = "Ростов";
         staticElementsForPage.search(textForSearch);
         List<String> result = staticElementsForPage.getFilesOnPage();
         softAssert.assertFalse(staticElementsForPage
-                        .isListContainsElement(result, textForSearch),
+                        .isListEqualsElement(result, textForSearch),
                 "В результате поиска не было найдено файла с нужным именем.");
         softAssert.assertAll();
     }

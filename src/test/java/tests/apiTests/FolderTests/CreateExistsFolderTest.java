@@ -7,15 +7,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tests.apiTests.ApiBaseTest;
 
+import java.io.IOException;
+
 public class CreateExistsFolderTest extends ApiBaseTest {
 
-    String folder = "ApiTestFolder";
+    public CreateExistsFolderTest() throws IOException {
+    }
 
     @BeforeMethod
     public void createFolderIfNotExist() {
-        response = apiMethods.getInformationAboutFolder(folder);
+        response = apiMethods.getInformationAboutFolder(workFolder);
         if (response.getStatusCode() != 200) {
-            apiMethods.createFolder(folder);
+            apiMethods.createFolder(workFolder);
         }
     }
 
@@ -23,13 +26,13 @@ public class CreateExistsFolderTest extends ApiBaseTest {
     @Test
     public void createExistsFolderTest() {
         response = apiMethods
-                .createFolder(folder);
+                .createFolder(workFolder);
         Assert.assertEquals(response.getStatusCode(), 409,
-                "Запрос вернул код " + response.getStatusCode());
+                "Запрос вернул код " + response.getStatusCode() + response.asString());
     }
 
     @AfterMethod
     public void deleteFolder() {
-        apiMethods.deleteFolder(folder);
+        apiMethods.deleteFolder(workFolder);
     }
 }

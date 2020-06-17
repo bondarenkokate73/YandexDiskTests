@@ -1,6 +1,7 @@
 package pagesAndElements;
 
 import helpers.Waiters;
+import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,205 +12,150 @@ import java.util.List;
 
 import static helpers.JavaScriptExecutorHelper.dropFile;
 
-/**
- * Статические элементы каждой страницы.
- */
 public class StaticElementsForPage {
 
-    /**
-     * Драйвер.
-     */
     private WebDriver driver;
 
-    /**
-     * Класс поиска статических элементов.
-     */
     private FindStaticElements findStaticElements;
 
-    /**
-     * Конструктор класса.
-     */
     public StaticElementsForPage(final WebDriver driver) {
         this.driver = driver;
         findStaticElements = new FindStaticElements(driver);
     }
 
-    /**
-     * Поиск элемента.
-     */
+    @Step("Поиск элемента по диску")
     public void search(final String text) {
-        findStaticElements.getInputSearchElement()
-                .sendKeys(text + Keys.ENTER);
+        cleanInput(findStaticElements.getInputSearchElement()).sendKeys(text + Keys.ENTER);
     }
 
-    /**
-     * Проверка наличия панели поиска.
-     */
+    @Step("Проверка наличия панели поиска")
     public Boolean isSearchResultPanelDisplayed() {
         return findStaticElements.getSearchResultPanelElement()
                 .isDisplayed();
     }
 
-    /**
-     * Загрузка файлов на диск.
-     */
+    @Step("Загрузка файлов на диск")
     public void downloadFileOnDisk(final File file) {
         findStaticElements.getButtonDownload()
-                .sendKeys(file.getAbsolutePath()
-                        + Keys.ENTER);
+                .sendKeys(file.getAbsolutePath());
     }
 
-    /**
-     * Нажатие на кнопку Создать.
-     */
-    public void clickButtonCreate() {
+    @Step("Нажатие на кнопку Создать")
+    public StaticElementsForPage clickButtonCreate() {
         findStaticElements.getButtonCreate()
                 .click();
+        return this;
     }
 
-    /**
-     * Нажатие на кнопку создания папки.
-     */
+    @Step("Нажатие на кнопку создания папки")
     public StaticElementsForPage clickButtonCreateFolder() {
         findStaticElements.getButtonCreateFolder()
                 .click();
         return this;
     }
 
-    /**
-     * Нажатие на кнопку текстового документа.
-     */
+    @Step("Нажатие на кнопку текстового документа")
     public StaticElementsForPage clickButtonCreateTextDoc() {
         findStaticElements.getButtonCreateTextDoc()
                 .click();
         return this;
     }
 
-    /**
-     * Нажатие на кнопку создания таблицы.
-     */
+    @Step("Нажатие на кнопку создания таблицы")
     public void clickButtonCreateTable() {
         findStaticElements.getButtonCreateTable()
                 .click();
     }
 
-    /**
-     * Нажатие на кнопку создания презентации.
-     */
+    @Step("Нажатие на кнопку создания презентации")
     public void clickButtonCreatePresentation() {
         findStaticElements.getButtonCreatePresentation()
                 .click();
     }
 
-    /**
-     * Нажатие на кнопку создания альбома.
-     */
+    @Step("Нажатие на кнопку создания альбома")
     public StaticElementsForPage clickButtonCreateAlbum() {
         findStaticElements.getButtonCreateAlbum()
                 .click();
         return this;
     }
 
-    /**
-     * Нажатие на кнопку добавления места в диск.
-     */
+    @Step("Нажатие на кнопку добавления места в диск")
     public void clickButtonAddSpace() {
         findStaticElements.getButtonAddSpace()
                 .click();
     }
 
-    /**
-     * Нажатие на кнопку скачать приложение.
-     */
+    @Step("Нажатие на кнопку скачать приложение")
     public void clickButtonDownloadApp() {
         findStaticElements.getButtonDownloadApp()
                 .click();
     }
 
-    /**
-     * Нажатие на кнопку перехода на страницу Последние.
-     */
+    @Step("Нажатие на кнопку перехода на страницу Последние")
     public LastPage clickButtonPageLast() {
         findStaticElements.getButtonPageLast()
                 .click();
         return new LastPage(driver);
     }
 
-    /**
-     * Нажатие на кнопку перехода на страницу Файлы.
-     */
+    @Step("Нажатие на кнопку перехода на страницу Файлы")
     public FilesPage clickButtonPageFiles() {
         findStaticElements.getButtonPageFiles()
                 .click();
         return new FilesPage(driver);
     }
 
-    /**
-     * Нажатие на кнопку перехода на страницу Фото.
-     */
+    @Step("Нажатие на кнопку перехода на страницу Фото")
     public PhotosPage clickButtonPagePhotos() {
         findStaticElements.getButtonPagePhotos()
                 .click();
         return new PhotosPage(driver);
     }
 
-    /**
-     * Нажатие на кнопку перехода на страницу Альбомы.
-     */
+    @Step("Нажатие на кнопку перехода на страницу Альбомы")
     public AlbumsPage clickButtonPageAlbums() {
         findStaticElements.getButtonPageAlbums()
                 .click();
         return new AlbumsPage(driver);
     }
 
-    /**
-     * Нажатие на кнопку перехода на страницу Общий доступ.
-     */
+    @Step("Нажатие на кнопку перехода на страницу Общий доступ")
     public PublicAccessPage clickButtonPagePublicAccess() {
         findStaticElements.getButtonPagePublicAccess()
                 .click();
         return new PublicAccessPage(driver);
     }
 
-    /**
-     * Нажатие на кнопку перехода на страницу История.
-     */
+    @Step("Нажатие на кнопку перехода на страницу История")
     public HistoryPage clickButtonPageHistory() {
         findStaticElements.getButtonPageHistory()
                 .click();
         return new HistoryPage(driver);
     }
 
-    /**
-     * Нажатие на кнопку перехода на страницу Архив.
-     */
+    @Step("Нажатие на кнопку перехода на страницу Архив")
     public ArchivePage clickButtonPageArchive() {
         findStaticElements.getButtonPageArchive()
                 .click();
         return new ArchivePage(driver);
     }
 
-    /**
-     * Нажатие на кнопку перехода на страницу Корзины.
-     */
+    @Step("Нажатие на кнопку перехода на страницу Корзины")
     public TrashPage clickButtonPageTrash() {
         findStaticElements.getButtonPageTrash()
                 .click();
         return new TrashPage(driver);
     }
 
-    /**
-     * Нажатие на кнопку перехода на страницу Загрузок.
-     */
+    @Step("Нажатие на кнопку перехода на страницу Загрузок")
     public DownloadPage clickButtonPageDownload() {
         findStaticElements.getButtonPageDownload()
                 .click();
         return new DownloadPage(driver);
     }
 
-    /**
-     * Получение заголовка страницы.
-     */
+    @Step("Получение заголовка страницы")
     public String getHeader(final String text) {
         Waiters
                 .waitUntilElementContainsText(
@@ -219,20 +165,16 @@ public class StaticElementsForPage {
         return findStaticElements.headerElement.getText();
     }
 
-    /**
-     * Проверка появилось ли модальное окно загрузки файлов.
-     */
+    @Step("Проверка появилось ли модальное окно загрузки файлов")
     public Boolean isModalWindowDownloadFileDisplayed() {
         Waiters.waitUntilVisibility(findStaticElements
                 .getModalWindowDownloadFileElement(), driver);
         return findStaticElements.getModalWindowDownloadFileElement().isDisplayed();
     }
 
-    /**
-     * Получение списка имен скачанных файлов.
-     */
+    @Step("Получение списка имен скачанных файлов")
     public List<String> getNamesOfDownloadFiles() {
-        List<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<String>();
         for (WebElement element :
                 findStaticElements.getListDownloadFiles()) {
             result.add(element.getText());
@@ -240,55 +182,54 @@ public class StaticElementsForPage {
         return result;
     }
 
-    /**
-     * Проверка существует ли загружаемый файл.
-     */
+    @Step("Проверка существует ли загружаемый файл")
     public Boolean isFileIsDouble() {
         return findStaticElements
                 .getButtonsDoubleFileElement()
                 .isDisplayed();
     }
 
-    /**
-     * Проверка открытия модального окна создания файлов.
-     */
+    @Step("Проверка открытия модального окна создания файлов")
     public Boolean isModalWindowCreateOpen() {
         return findStaticElements
                 .getModalWindowCreateElement()
                 .isDisplayed();
     }
 
-    /**
-     * Поиск нужных файлов на странице.
-     */
+    @Step("Поиск нужных файлов на странице")
+    public Boolean isListEqualsElement(
+            final List<String> searchResults,
+            final String name) {
+        for (String element : searchResults) {
+            if (element.equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Step("Поиск нужных файлов на странице")
     public Boolean isListContainsElement(
             final List<String> searchResults,
             final String name) {
         for (String element : searchResults) {
             if (element.contains(name)) {
                 return true;
-            } else {
-                return false;
             }
         }
         return false;
     }
 
-    /**
-     * Закрытие модального окна загрузки файлов.
-     */
+    @Step("Закрытие модального окна загрузки файлов")
     public void closeModalWindowDownloadFiles() {
         findStaticElements
                 .getButtonCloseModalWindowDownloadFilesElement()
                 .click();
     }
 
-
-    /**
-     * Получение списка файлов на странице.
-     */
+    @Step("Получение списка файлов на странице")
     public List<String> getFilesOnPage() {
-        List<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<String>();
         for (WebElement element
                 : findStaticElements.getNamesFilesOnPage()) {
             result.add(element.getText());
@@ -296,11 +237,19 @@ public class StaticElementsForPage {
         return result;
     }
 
-    /**
-     * Получение списка файлов на странице с ожиданием появления конкретного файла.
-     */
+    @Step("Получение списка файлов на странице")
+    public Boolean isTrashClean() {
+        try {
+            Waiters.waitUntilElementsListEmpty(driver, findStaticElements.byNamesOfFilesOnPageElements);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Step("Получение списка файлов на странице с ожиданием появления конкретного файла")
     public List<String> getFilesOnPage(final String text) {
-        List<String> result = new ArrayList<>();
+        List<String> result = new ArrayList<String>();
         for (WebElement element
                 : findStaticElements.getNamesFilesOnPage(text)) {
             result.add(element.getText());
@@ -308,23 +257,21 @@ public class StaticElementsForPage {
         return result;
     }
 
-    /**
-     * Получение поля для ввода имени новой папки.
-     */
+    @Step("Получение поля для ввода имени новой папки")
     public StaticElementsForPage inputNameFolder(final String name) {
-        for (Integer p = 0; p < 12; p++) {
-            findStaticElements
-                    .getInputNameFolder().sendKeys(Keys.BACK_SPACE);
-        }
-        findStaticElements
-                .getInputNameFolder()
-                .sendKeys(name);
+        cleanInput(findStaticElements.getInputNameFolder()).sendKeys(name);
         return this;
     }
 
-    /**
-     * Нажатие на кнопку Сохранить в окне создания новой папки.
-     */
+    @Step("Очистка поля")
+    public WebElement cleanInput(final WebElement input) {
+        for (Integer p = 0; p < 12; p++) {
+            input.sendKeys(Keys.BACK_SPACE);
+        }
+        return input;
+    }
+
+    @Step("Нажатие на кнопку Сохранить в окне создания новой папки")
     public StaticElementsForPage clickButtonSaveFolder() {
         findStaticElements
                 .getButtonSaveNewFolderElement()
@@ -332,9 +279,7 @@ public class StaticElementsForPage {
         return this;
     }
 
-    /**
-     * Нажатие на кнопку Продолжить в окне создания альбома.
-     */
+    @Step("Нажатие на кнопку Продолжить в окне создания альбома")
     public StaticElementsForPage clickButtonContinueCreateAlbum() {
         findStaticElements
                 .getButtonContinueCreateAlbumElement()
@@ -342,9 +287,7 @@ public class StaticElementsForPage {
         return this;
     }
 
-    /**
-     * Активация чекбокса первого фото.
-     */
+    @Step("Активация чекбокса первого фото")
     public StaticElementsForPage clickCheckboxPhoto() {
         findStaticElements
                 .getCheckboxPhoto()
@@ -352,29 +295,35 @@ public class StaticElementsForPage {
         return this;
     }
 
-    /**
-     * Нажатие на кнопку Создать альбом.
-     */
+    @Step("Нажатие на кнопку Создать альбом")
     public StaticElementsForPage clickButtonCreateAlbumElement() {
         findStaticElements
-                .getButtonCreateAlbumElement()
+                .getButtonApprovedCreateAlbumElement()
                 .click();
         return this;
     }
 
-    /**
-     * Проверка нахождения на нужной странице.
-     */
+    @Step("Проверка нахождения на нужной странице")
     public Boolean isPageContainsUrl(final String urlPage) {
         Waiters.waitUntilUrlContainsText(
                 urlPage, driver);
         return driver.getCurrentUrl().contains(urlPage);
     }
 
-    /**
-     * Загрузка файла методом перетаскивания в браузер.
-     */
+    @Step("Загрузка файла методом перетаскивания в браузер")
     public void downloadFileDragAndDrop(final String path) {
         dropFile(findStaticElements.getDropzoneElement(), path);
+    }
+
+    @Step("Проверка удаления элемента")
+    public Boolean isElementDelete(final List<WebElement> collection,
+                                   final String file) {
+        try {
+            Waiters.waitUntilCollectionNotContainsText(
+                    driver, collection, file);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 }

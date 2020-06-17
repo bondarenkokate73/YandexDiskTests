@@ -1,5 +1,6 @@
 package helpers;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
@@ -9,50 +10,25 @@ import tests.apiTests.ApiBaseTest;
 
 public class RestAssuredHelper {
 
-    /**
-     * Спецификация запроса.
-     */
     private RequestSpecification request;
 
-    /**
-     * Вид запроса.
-     */
     private TypesOfRequest type;
 
     /**
      * Виды запросов.
      */
     public enum TypesOfRequest {
-        /**
-         *
-         */
         PUT,
-        /**
-         *
-         */
         POST,
-        /**
-         *
-         */
         GET,
-        /**
-         *
-         */
         DELETE
     }
 
-    /**
-     * @param typesOfRequest вид запроса
-     */
     public RestAssuredHelper(final TypesOfRequest typesOfRequest) {
         this.type = typesOfRequest;
     }
 
-    /**
-     * Запись нужных параметров запроса.
-     *
-     * @return RestAssuredHelper
-     */
+    @Step("Задание заголовков запроса без авторизации")
     public final RestAssuredHelper setRequestSpecification() {
         request = RestAssured
                 .given()
@@ -60,11 +36,7 @@ public class RestAssuredHelper {
         return this;
     }
 
-    /**
-     * Запись нужных параметров запроса.
-     *
-     * @return RestAssuredHelper
-     */
+    @Step("Задание заголовков запроса с авторизацией")
     public final RestAssuredHelper setRequestSpecification(final String token) {
         request = RestAssured
                 .given()
@@ -73,12 +45,7 @@ public class RestAssuredHelper {
         return this;
     }
 
-    /**
-     * Отправка запроса.
-     *
-     * @param path путь для запроса
-     * @return ответ
-     */
+    @Step("Отправка запроса на сервер")
     public final Response makeRequest(final String path) {
         String requestPath = ApiBaseTest.EndPoints.BASE_PATH + path;
         Response response;
@@ -102,13 +69,7 @@ public class RestAssuredHelper {
         return response;
     }
 
-    /**
-     * Получение нужного значения из ответа на запрос.
-     *
-     * @param response      Ответ сервера
-     * @param nameAttribute Название атрибута
-     * @return значение атрибута
-     */
+    @Step("Получение значения атрибута из ответа от сервера")
     public static String getValueFromJson(final Response response,
                                           final String nameAttribute) {
         String responseStr = response.asString();

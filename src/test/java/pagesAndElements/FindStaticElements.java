@@ -1,6 +1,7 @@
 package pagesAndElements;
 
 import helpers.Waiters;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -71,8 +72,8 @@ public class FindStaticElements {
     /**
      * Кнопка создания папки.
      */
-    private By byButtonCreateFolderElement
-            = By.cssSelector("button:nth-child(1)");
+    @FindBy(xpath = "//button[.//span//text()='Папку']")
+    private WebElement buttonCreateFolderElement;
 
     /**
      *
@@ -83,26 +84,26 @@ public class FindStaticElements {
     /**
      * Кнопка создания текстового документа.
      */
-    private By byButtonCreateTextDocElement
-            = By.cssSelector("button:nth-child(2)");
+    @FindBy(xpath = "//button[.//span//text()='Текстовый документ']")
+    private WebElement buttonCreateTextDocElement;
 
     /**
      * Кнопка создания таблицы.
      */
-    private By byButtonCreateTableElement
-            = By.cssSelector("button:nth-child(3)");
+    @FindBy(xpath = "//button[.//span//text()='Таблицу']")
+    private WebElement buttonCreateTableElement;
 
     /**
      * Кнопка создания презентации.
      */
-    private By byButtonCreatePresentationElement
-            = By.cssSelector("button:nth-child(4)");
+    @FindBy(xpath = "//button[.//span//text()='Презентацию']")
+    private WebElement buttonCreatePresentationElement;
 
     /**
      * Кнопка создания альбома.
      */
-    private By byButtonCreateAlbumElement
-            = By.cssSelector("button:nth-child(5)");
+    @FindBy(xpath = "//button[.//span//text()='Альбом']")
+    private WebElement buttonCreateAlbumElement;
 
     /**
      * Блок добавления места в диск.
@@ -185,7 +186,7 @@ public class FindStaticElements {
      * Кнопка Создание альбома.
      */
     @FindBy(css = "div.resources-action-bar__side-right > button")
-    private WebElement buttonCreateAlbumElement;
+    private WebElement buttonApprovedCreateAlbumElement;
 
     /**
      * Заголовок страницы.
@@ -233,24 +234,27 @@ public class FindStaticElements {
      * Массив чекбоксов выбора фото в альбом.
      */
     @FindBy(css = "input.lite-checkbox__control")
-    private WebElement[] checkboxesPhoto;
+    private List<WebElement> checkboxesPhoto;
+    By byCheckboxesPhoto = By.cssSelector("input.lite-checkbox__control");
 
     /**
      * Названия файлов на странице.
      */
     @FindBy(css = "div[class='listing__items'] > div > div > div > span.clamped-text")
     private List<WebElement> namesOfFilesOnPageElements;
+    By byNamesOfFilesOnPageElements = By.cssSelector("div[class='listing__items'] > div > div > div > span.clamped-text");
 
     /**
      * Получение элементов на странице.
      */
-    @FindBy(css = "div.client-listing > div:nth-child(3) > div > div")
-    private WebElement[] filesOnPageElements;
+    @FindBy(css = "div.listing__items > div")
+    private List<WebElement> filesOnPageElements;
+    By byFilesOnPageElements = By.cssSelector("div.listing__items > div");
 
     /**
      * Кнопка Продолжить при создании Альбома.
      */
-    @FindBy(css = "div.confirmation-dialog__footer > button")
+    @FindBy(xpath = "//button[./span//text()='Продолжить']")
     private WebElement buttonContinueCreateAlbumElement;
 
     /**
@@ -262,303 +266,256 @@ public class FindStaticElements {
     /**
      * Имя элемента на странице.
      */
-    private By nameOfElement = By.cssSelector("span[class='clamped-text']");
+    private By nameOfElement = By.cssSelector("span.clamped-text");
 
-    /**
-     * Получить кнопки Заменить и Не загружать при попытке загрузить сущесвующий файл.
-     */
+    @Step("Получить кнопки Заменить и Не загружать при попытке загрузить сущесвующий файл.")
     public WebElement getButtonsDoubleFileElement() {
         return buttonsDoubleFileElement;
     }
 
-    /**
-     * Получить поле ввода названия новой папки.
-     */
+    @Step("Получить поле ввода названия новой папки.")
     public WebElement getInputNameFolder() {
         Waiters.waitUntilElementToBeClickable(
                 inputNameFolderElement, driver);
         return inputNameFolderElement;
     }
 
-    /**
-     * Получить модальное окно создания элемента.
-     */
+    @Step("Получить модальное окно создания элемента.")
     public WebElement getModalWindowCreateElement() {
         Waiters.waitUntilVisibility(
                 modalWindowCreateElement, driver);
         return modalWindowCreateElement;
     }
 
-    /**
-     * Получить кнопку закрытия модального окна загрузки файлов.
-     */
+    @Step("Получить кнопку закрытия модального окна загрузки файлов.")
     public WebElement getButtonCloseModalWindowDownloadFilesElement() {
         return buttonCloseModalWindowDownloadFilesElement
                 .findElement(By.tagName("button"));
     }
 
-    /**
-     * Получение списка загруженных файлов.
-     */
+    @Step("Получение списка загруженных файлов.")
     public List<WebElement> getListDownloadFiles() {
         return downloadFilesElements;
     }
 
-    /**
-     * Кнопка Сохранить на форме ввода названия новой папки.
-     */
+    @Step("Кнопка Сохранить на форме ввода названия новой папки.")
     WebElement getButtonSaveNewFolderElement() {
         Waiters.waitUntilElementToBeClickable(
                 buttonSaveNewFolderElement, driver);
         return buttonSaveNewFolderElement;
     }
 
-    /**
-     * Получение модального окна загрузки файлов.
-     */
+    @Step("Получение модального окна загрузки файлов.")
     WebElement getModalWindowDownloadFileElement() {
         return modalWindowDownloadFileElement;
     }
 
-    /**
-     * Получение элемента поля поиска.
-     */
-    WebElement getInputSearchElement() {
+    @Step("Получение элемента поля поиска.")
+    public WebElement getInputSearchElement() {
         Waiters.waitUntilElementToBeClickable(
                 formSearchElement, driver);
         return formSearchElement
                 .findElement(byInputSearchElement);
     }
 
-    /**
-     * Получение панели с результатами поиска.
-     */
+    @Step("Получение панели с результатами поиска.")
     WebElement getSearchResultPanelElement() {
         Waiters.waitUntilVisibility(
                 searchResultPanelElement, driver);
         return searchResultPanelElement;
     }
 
-    /**
-     * Получение кнопки загрузки.
-     */
+    @Step("Получение кнопки загрузки.")
     WebElement getButtonDownload() {
-        //    Waiters.waitUntilElementToBeClickable(buttonDownloadElement, driver);
         return buttonDownloadElement;
     }
 
-    /**
-     * Получение кнопки создания.
-     */
+    @Step("Получение кнопки создания.")
     WebElement getButtonCreate() {
         Waiters.waitUntilElementToBeClickable(
                 buttonCreateElement, driver);
         return buttonCreateElement;
     }
 
-    /**
-     * Получение кнопки создания папки.
-     */
+    @Step("Получение кнопки создания папки.")
     WebElement getButtonCreateFolder() {
         Waiters.waitUntilVisibility(
                 sidebarButtonsCreateElement, driver);
-        return sidebarButtonsCreateElement
-                .findElement(byButtonCreateFolderElement);
+        return buttonCreateFolderElement;
     }
 
-    /**
-     * Получене кнопки создания текстового документа.
-     */
+    @Step("Получене кнопки создания текстового документа.")
     WebElement getButtonCreateTextDoc() {
-        return sidebarButtonsCreateElement
-                .findElement(byButtonCreateTextDocElement);
+        Waiters.waitUntilElementToBeClickable(buttonCreateTextDocElement, driver);
+        return buttonCreateTextDocElement;
     }
 
-    /**
-     * Получение кнопки создания таблицы.
-     */
+    @Step("Получение кнопки создания таблицы.")
     WebElement getButtonCreateTable() {
-        return sidebarButtonsCreateElement
-                .findElement(byButtonCreateTableElement);
+        Waiters.waitUntilElementToBeClickable(buttonCreateTableElement, driver);
+        return buttonCreateTableElement;
     }
 
-    /**
-     * Получение кнопки создания презентации.
-     */
+    @Step("Получение кнопки создания презентации.")
     WebElement getButtonCreatePresentation() {
-        return sidebarButtonsCreateElement
-                .findElement(byButtonCreatePresentationElement);
+        Waiters.waitUntilElementToBeClickable(buttonCreatePresentationElement, driver);
+        return buttonCreatePresentationElement;
     }
 
-    /**
-     * Получение кнопки создания альбома.
-     */
+    @Step("Получение кнопки создания альбома.")
     WebElement getButtonCreateAlbum() {
-        return sidebarButtonsCreateElement
-                .findElement(byButtonCreateAlbumElement);
+        Waiters.waitUntilElementToBeClickable(buttonCreateAlbumElement, driver);
+        return buttonCreateAlbumElement;
     }
 
-    /**
-     * Получение кнопки добавления места в диск.
-     */
+    @Step("Получение кнопки добавления места в диск.")
     WebElement getButtonAddSpace() {
         return footerAddSpaceElement
                 .findElement(byButtonAddSpaceElement);
     }
 
-    /**
-     * Получение кнопки скачивания приложения.
-     */
+    @Step("Получение кнопки скачивания приложения.")
     WebElement getButtonDownloadApp() {
         return footerDownloadAppElement
                 .findElement(byButtonDownloadApp);
     }
 
-    /**
-     * Получение кнопки перехода на страницу Последние.
-     */
+    @Step("Получение кнопки перехода на страницу Последние.")
     WebElement getButtonPageLast() {
         Waiters.waitUntilVisibility(
                 buttonPageLast, driver);
         return buttonPageLast;
     }
 
-    /**
-     * Получение кнопки перехода на страницу Файлы.
-     */
+    @Step("Получение кнопки перехода на страницу Файлы.")
     WebElement getButtonPageFiles() {
         Waiters.waitUntilVisibility(
                 buttonPageFiles, driver);
         return buttonPageFiles;
     }
 
-    /**
-     * Получение кнопки перехода на страницу Фото.
-     */
+    @Step("Получение кнопки перехода на страницу Фото.")
     WebElement getButtonPagePhotos() {
         Waiters.waitUntilVisibility(
                 buttonPagePhotos, driver);
         return buttonPagePhotos;
     }
 
-    /**
-     * Получение кнопки перехода на страницу Альбомы.
-     */
+    @Step("Получение кнопки перехода на страницу Альбомы.")
     WebElement getButtonPageAlbums() {
         Waiters.waitUntilVisibility(
                 buttonPageAlbums, driver);
         return buttonPageAlbums;
     }
 
-    /**
-     * Получение кнопки перехода на страницу Общий доступ.
-     */
+    @Step("Получение кнопки перехода на страницу Общий доступ.")
     WebElement getButtonPagePublicAccess() {
         Waiters.waitUntilVisibility(
                 buttonPagePublicAccess, driver);
         return buttonPagePublicAccess;
     }
 
-    /**
-     * Получение кнопки перехода на страницу История.
-     */
+    @Step("Получение кнопки перехода на страницу История.")
     WebElement getButtonPageHistory() {
         Waiters.waitUntilVisibility(
                 buttonPageHistory, driver);
         return buttonPageHistory;
     }
 
-    /**
-     * Получение кнопки перехода на страницу Архив.
-     */
+    @Step("Получение кнопки перехода на страницу Архив.")
     WebElement getButtonPageArchive() {
         Waiters.waitUntilVisibility(
                 buttonPageArchive, driver);
         return buttonPageArchive;
     }
 
-    /**
-     * Получение кнопки перехода на страницу Корзина.
-     */
+    @Step("Получение кнопки перехода на страницу Корзина.")
     WebElement getButtonPageTrash() {
         Waiters.waitUntilVisibility(
                 buttonPageTrash, driver);
         return buttonPageTrash;
     }
 
-    /**
-     * Получение кнопки перехода на страницу Загрузки.
-     */
+    @Step("Получение кнопки перехода на страницу Загрузки.")
     WebElement getButtonPageDownload() {
         Waiters.waitUntilVisibility(
                 buttonPageDownload, driver);
         return buttonPageDownload;
     }
 
-    /**
-     * Получение файлов на странице.
-     */
+    @Step("Получение файлов на странице.")
     public List<WebElement> getNamesFilesOnPage() {
         return namesOfFilesOnPageElements;
     }
 
-    /**
-     * Получение файлов на странице.
-     */
+    @Step("Получение файлов на странице.")
     List<WebElement> getNamesFilesOnPage(final String file) {
-        Waiters.waitUntilCollectionContainsText(driver, namesOfFilesOnPageElements, file);
-        return namesOfFilesOnPageElements;
+        try {
+            Waiters.waitUntilCollectionContainsText(driver, byNamesOfFilesOnPageElements, file);
+            return namesOfFilesOnPageElements;
+        } catch (Exception ex) {
+            return null;
+        }
     }
 
-    /**
-     * Получение кнопки Продолжить на форме ввода названия нового альбома.
-     */
+    @Step("Получение кнопки Продолжить на форме ввода названия нового альбома.")
     public WebElement getButtonContinueCreateAlbumElement() {
         Waiters.waitUntilElementToBeClickable(
                 buttonContinueCreateAlbumElement, driver);
         return buttonContinueCreateAlbumElement;
     }
 
-    /**
-     * Получение чекбокса первого фото.
-     */
+    @Step("Получение чекбокса первого фото.")
     public WebElement getCheckboxPhoto() {
         Waiters.waitUntilUrlContainsText(
                 "Ccreate-album", driver);
-        return checkboxesPhoto[1];
+        Waiters.waitUntilElementsListNotEmpty(driver, byCheckboxesPhoto);
+        return checkboxesPhoto.get(1);
     }
 
-    /**
-     * Получение кнопки Создать альбом.
-     */
-    public WebElement getButtonCreateAlbumElement() {
-        return buttonCreateAlbumElement;
+    @Step("Получение кнопки Создать альбом.")
+    public WebElement getButtonApprovedCreateAlbumElement() {
+        return buttonApprovedCreateAlbumElement;
     }
 
-    /**
-     *
-     */
-    public WebElement[] getFilesOnPage() {
+    @Step("Получение файлов на странице")
+    public List<WebElement> getFilesOnPage() {
         return filesOnPageElements;
     }
 
-    /**
-     * Поиск элемента по имени.
-     */
+    @Step("Поиск элемента по имени.")
     public WebElement getElementOfName(final String name) {
         String nameElement;
+        Waiters.waitUntilCollectionContainsText(driver, byNamesOfFilesOnPageElements, name);
         for (WebElement element : getFilesOnPage()) {
-            nameElement = element.findElement(nameOfElement).getText();
-            if (nameElement.equals(name)) {
-                return element;
+            try {
+                nameElement = element.findElement(nameOfElement).getText();
+                if (nameElement.equals(name)) {
+                    return element;
+                }
+            } catch (Exception ex) {
             }
         }
         return null;
     }
 
-    /**
-     * Получение зоны загрузки файлов.
-     */
+    @Step("Поиск элемента по имени.")
+    public WebElement getElementContainsName(final String name) {
+        String nameElement;
+      //  Waiters.waitUntilCollectionContainsText(driver, byNamesOfFilesOnPageElements, name);
+        for (WebElement element : getFilesOnPage()) {
+            try {
+                nameElement = element.findElement(nameOfElement).getText();
+                if (nameElement.contains(name)) {
+                    return element;
+                }
+            } catch (Exception ex) {
+            }
+        }
+        return null;
+    }
+
+    @Step("Получение зоны загрузки файлов.")
     public WebElement getDropzoneElement() {
         return dropzoneElement;
     }
