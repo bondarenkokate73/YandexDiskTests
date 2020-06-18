@@ -25,9 +25,10 @@ public class UploadFileTest extends ApiBaseTest {
 
     @Description("Ac20 - Загрузка нового файла в диск")
     @Test
-    public void uploadFileTest() {
+    public void uploadFileTest() throws InterruptedException {
         SoftAssert softAssert = new SoftAssert();
         response = apiMethods.uploadFile(workPath, workFile, linkUploadFile);
+        Thread.sleep(1000);
         softAssert.assertEquals(response.getStatusCode(), 202,
                 "Запрос вернул код " + response.getStatusCode() + response.asString());
         response = apiMethods.getInformationAboutFile(workPath, workFile);

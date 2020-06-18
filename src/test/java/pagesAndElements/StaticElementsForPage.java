@@ -114,7 +114,8 @@ public class StaticElementsForPage {
     }
 
     @Step("Нажатие на кнопку перехода на страницу Альбомы")
-    public AlbumsPage clickButtonPageAlbums() {
+    public AlbumsPage clickButtonPageAlbums() throws InterruptedException {
+        Thread.sleep(1000);
         findStaticElements.getButtonPageAlbums()
                 .click();
         return new AlbumsPage(driver);

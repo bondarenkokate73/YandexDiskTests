@@ -14,18 +14,20 @@ public class DeleteFileTest extends ApiBaseTest {
     }
 
     @BeforeMethod
-    public void uploadFileIfNotExists() {
+    public void uploadFileIfNotExists() throws InterruptedException {
         response = apiMethods.getInformationAboutFile(workPath, workFile);
         if (response.getStatusCode() == 404) {
             apiMethods.uploadFile(workPath, workFile, linkUploadFile);
         }
+        Thread.sleep(1000);
     }
 
     @Description("Ac12 - Удаление файла")
     @Test
-    public void deleteFileTest() {
+    public void deleteFileTest() throws InterruptedException {
         SoftAssert softAssert = new SoftAssert();
         response = apiMethods.deleteFile(workPath, workFile);
+        Thread.sleep(1000);
         softAssert.assertEquals(response.getStatusCode(),
                 204,
                 "Запрос вернул код " + response.getStatusCode() + response.asString());

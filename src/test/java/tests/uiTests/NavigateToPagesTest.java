@@ -61,7 +61,7 @@ public class NavigateToPagesTest extends UiBaseTest {
 
     @Description("Uc05 - Просмотр страницы «Альбомы»")
     @Test
-    public void navigateAlbumsPageTest() {
+    public void navigateAlbumsPageTest() throws InterruptedException {
         AlbumsPage albumsPage = new AlbumsPage(getDriver());
         SoftAssert softAssert = new SoftAssert();
         Assert.assertTrue(filesPage.isFilesPage(),

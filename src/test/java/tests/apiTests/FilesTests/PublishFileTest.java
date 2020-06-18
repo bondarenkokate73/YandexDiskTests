@@ -16,11 +16,12 @@ public class PublishFileTest extends ApiBaseTest {
     }
 
     @BeforeMethod
-    public void uploadFileIfNotExists() {
+    public void uploadFileIfNotExists() throws InterruptedException {
         response = apiMethods.getInformationAboutFile(workPath, workFile);
         if (response.getStatusCode() == 404) {
             apiMethods.uploadFile(workPath, workFile, linkUploadFile);
         }
+        Thread.sleep(1000);
     }
 
     @Description("Ac17 - Публикация файла")

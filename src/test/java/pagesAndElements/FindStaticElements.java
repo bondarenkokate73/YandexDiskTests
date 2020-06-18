@@ -475,6 +475,8 @@ public class FindStaticElements {
 
     @Step("Получение кнопки Создать альбом.")
     public WebElement getButtonApprovedCreateAlbumElement() {
+        Waiters.waitUntilElementToBeClickable(
+                buttonApprovedCreateAlbumElement, driver);
         return buttonApprovedCreateAlbumElement;
     }
 
@@ -502,7 +504,7 @@ public class FindStaticElements {
     @Step("Поиск элемента по имени.")
     public WebElement getElementContainsName(final String name) {
         String nameElement;
-      //  Waiters.waitUntilCollectionContainsText(driver, byNamesOfFilesOnPageElements, name);
+        //  Waiters.waitUntilCollectionContainsText(driver, byNamesOfFilesOnPageElements, name);
         for (WebElement element : getFilesOnPage()) {
             try {
                 nameElement = element.findElement(nameOfElement).getText();

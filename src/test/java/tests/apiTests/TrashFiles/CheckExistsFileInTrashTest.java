@@ -13,12 +13,13 @@ public class CheckExistsFileInTrashTest extends ApiBaseTest {
     }
 
     @BeforeMethod
-    public void uploadFileIfNotExists() {
+    public void uploadFileIfNotExists() throws InterruptedException {
         response = apiMethods.getInformationAboutFile(workPath, workFile);
         if (response.getStatusCode() == 404) {
             apiMethods.uploadFile(workPath, workFile, linkUploadFile);
         }
         apiMethods.deleteFile(workPath, workFile);
+        Thread.sleep(2000);
     }
 
     @Description("Ac22 - Проверка наличия файла в корзине")

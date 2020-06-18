@@ -77,7 +77,7 @@ public class ContextMenuTest extends UiBaseTest {
     @Description("Uc26 - Переместить элемент")
     @Test(priority = 2)
     public void transferElementTest() {
-        String folder = "Folder";
+        String folder = "Загрузки";
         SoftAssert softAssert = new SoftAssert();
         contextMenuElements.clickButtonTransfer()
                 .selectTransferFolder(folder)

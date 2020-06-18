@@ -35,12 +35,13 @@ public class TrashTest extends UiBaseTest {
 
     @Description("Uc30 - Очистка корзины")
     @Test
-    private void deleteFilesFromTrash() {
+    private void deleteFilesFromTrash() throws InterruptedException {
         staticElementsForPage.clickButtonPageTrash()
                 .clickButtonCleanTrash()
                 .clickButtonApprovalCleanTrash();
         Assert.assertTrue(staticElementsForPage.isTrashClean(),
                 "Не удалось дождаться опустения корзины.");
+        Thread.sleep(1000);
         Assert.assertTrue(filesOnPage.isEmpty(),
                 "Корзина не пуста.");
     }

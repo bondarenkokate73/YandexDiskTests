@@ -13,7 +13,7 @@ public class CreateAlbumTest extends UiBaseTest {
     private String defaultNameAlbum = "Новый альбом";
 
     @BeforeMethod
-    public void deleteFileIfExists() {
+    public void deleteFileIfExists() throws InterruptedException {
         staticElementsForPage.clickButtonPageAlbums();
         WebElement album = albumsPage.getAlbum();
         if (album != null) {
@@ -26,7 +26,7 @@ public class CreateAlbumTest extends UiBaseTest {
 
     @Description("Uc20 - Создание Альбома")
     @Test
-    public void createAlbum() {
+    public void createAlbum() throws InterruptedException {
         staticElementsForPage.clickButtonCreate();
         Assert.assertTrue(staticElementsForPage.isModalWindowCreateOpen(),
                 "Модальное окно создания не открылось.");
@@ -41,7 +41,7 @@ public class CreateAlbumTest extends UiBaseTest {
     }
 
     @AfterMethod
-    public void deleteFile() {
+    public void deleteFile() throws InterruptedException {
         staticElementsForPage.clickButtonPageAlbums();
         WebElement album = albumsPage.getAlbum();
         if (album != null) {

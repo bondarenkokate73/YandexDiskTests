@@ -23,12 +23,14 @@ public class UploadExistsFileTest extends UiBaseTest {
 
     @Description("Uc15 - Загрузка уже существующего файла")
     @Test
-    public void downloadOnDiskExistingFileTest() {
+    public void uploadOnDiskExistingFileTest() throws InterruptedException {
         Assert.assertTrue(file.exists(), "Файла не существует.");
         staticElementsForPage.downloadFileOnDisk(file);
+        Thread.sleep(1000);
         Assert.assertTrue(staticElementsForPage
                         .isModalWindowDownloadFileDisplayed(),
                 "Модальное окно загрузки файлов не появилось.");
+        Thread.sleep(1000);
         Assert.assertTrue(staticElementsForPage.isFileIsDouble(),
                 "Загружаемый файл не был дублем.");
         staticElementsForPage.closeModalWindowDownloadFiles();

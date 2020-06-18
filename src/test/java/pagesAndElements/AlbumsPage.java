@@ -71,7 +71,8 @@ public class AlbumsPage {
     }
 
     @Step("Получение элемента Новый альбом")
-    public WebElement getAlbum(final String nameAlbum) {
+    public WebElement getAlbum(final String nameAlbum) throws InterruptedException {
+        Thread.sleep(1000);
         List<WebElement> element = newAlbumElement;
         try {
             Waiters.waitUntilCollectionContainsText(driver, byNewAlbumElement, nameAlbum);
