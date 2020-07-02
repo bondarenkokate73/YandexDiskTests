@@ -42,6 +42,7 @@ public class TrashTest extends UiBaseTest {
         Assert.assertTrue(staticElementsForPage.isTrashClean(),
                 "Не удалось дождаться опустения корзины.");
         Thread.sleep(1000);
+        filesOnPage = staticElementsForPage.getFilesOnPage();
         Assert.assertTrue(filesOnPage.isEmpty(),
                 "Корзина не пуста.");
     }

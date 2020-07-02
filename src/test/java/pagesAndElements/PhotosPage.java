@@ -14,7 +14,7 @@ public class PhotosPage {
 
     public StaticElementsForPage staticElementsForPage;
 
-    public final String PAGE_HEADER = "Фото";
+    public final String PAGE_HEADER = "Все фотографии";
 
     public PhotosPage(final WebDriver webDriver) {
         this.driver = webDriver;

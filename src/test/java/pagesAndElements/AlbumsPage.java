@@ -75,7 +75,7 @@ public class AlbumsPage {
         Thread.sleep(1000);
         List<WebElement> element = newAlbumElement;
         try {
-            Waiters.waitUntilCollectionContainsText(driver, byNewAlbumElement, nameAlbum);
+      //      Waiters.waitUntilCollectionContainsText(driver, byNewAlbumElement, nameAlbum);
             return element.get(0);
         } catch (Exception ex) {
             return null;

@@ -46,7 +46,8 @@ public class CreateTextDocTest extends UiBaseTest {
     }
 
     @AfterMethod
-    public void deleteFile() {
+    public void deleteFile() throws InterruptedException {
+        Thread.sleep(1000);
         workElement = findStaticElements.getElementOfName(defaultNameTextDoc);
         if (workElement != null) {
             workElement.click();

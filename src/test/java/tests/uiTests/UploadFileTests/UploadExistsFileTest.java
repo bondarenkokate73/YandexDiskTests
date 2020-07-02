@@ -12,12 +12,13 @@ import java.io.File;
 public class UploadExistsFileTest extends UiBaseTest {
 
     @BeforeMethod
-    public void before() {
+    public void before() throws InterruptedException {
         file = new File(path + nameFile);
         filesOnPage = staticElementsForPage.getFilesOnPage();
         if (!staticElementsForPage
                 .isListEqualsElement(filesOnPage, nameFile)) {
             staticElementsForPage.downloadFileOnDisk(file);
+            Thread.sleep(3000);
         }
     }
 

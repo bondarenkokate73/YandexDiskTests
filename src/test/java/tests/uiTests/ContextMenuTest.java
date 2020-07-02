@@ -4,7 +4,7 @@ import helpers.Waiters;
 import io.qameta.allure.Description;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -36,7 +36,7 @@ public class ContextMenuTest extends UiBaseTest {
     }
 
     @Description("Uc23 - Поделиться элементом")
-    @Test(priority = 5)
+    @Test(priority = 0)
     public void shareElementTest() {
         SoftAssert softAssert = new SoftAssert();
         contextMenuElements.clickButtonShare();
@@ -52,7 +52,7 @@ public class ContextMenuTest extends UiBaseTest {
     }
 
     @Description("Uc24 - Скачать элемент")
-    @Test(priority = 4)
+    @Test(priority = 1)
     public void downloadElementTest() {
         contextMenuElements.clickButtonDownload();
         File file = new File(workDirectory + "/" + workFolder + ".zip");
@@ -61,7 +61,7 @@ public class ContextMenuTest extends UiBaseTest {
     }
 
     @Description("Uc25 - Переименовать элемент")
-    @Test(priority = 3)
+    @Test(priority = 2)
     public void renameElementTest() {
         final String newNameFolder = "RenameUiTestFolder";
         contextMenuElements.clickButtonRename();
@@ -75,8 +75,8 @@ public class ContextMenuTest extends UiBaseTest {
     }
 
     @Description("Uc26 - Переместить элемент")
-    @Test(priority = 2)
-    public void transferElementTest() {
+    @Test(priority = 3)
+    public void transferElementTest() throws InterruptedException {
         String folder = "Загрузки";
         SoftAssert softAssert = new SoftAssert();
         contextMenuElements.clickButtonTransfer()
@@ -87,7 +87,8 @@ public class ContextMenuTest extends UiBaseTest {
                 staticElementsForPage.isListEqualsElement(
                         filesOnPage,
                         "Папка осталась на прежнем месте."));
-        goToPage(getDriver(), "disk/" + folder);
+        goToPage(getDriver(), FILES_PAGE_URL + "/" + folder);
+        Thread.sleep(3000);
         filesOnPage = staticElementsForPage.getFilesOnPage();
         softAssert.assertTrue(
                 staticElementsForPage.isListEqualsElement(
@@ -98,7 +99,7 @@ public class ContextMenuTest extends UiBaseTest {
     }
 
     @Description("Uc27 - Копировать элемент в то же место")
-    @Test(priority = 1)
+    @Test(priority = 4)
     public void copyElementToThisPlaceTest() {
         Date date = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.mm.yyyy");
@@ -120,7 +121,7 @@ public class ContextMenuTest extends UiBaseTest {
     }
 
     @Description("Uc28 - Удалить элемент")
-    @Test
+    @Test(priority = 5)
     private void deleteElementTest() {
         contextMenuElements.clickButtonDelete();
         List<WebElement> filesOnPage = findStaticElements.getFilesOnPage();
@@ -131,7 +132,7 @@ public class ContextMenuTest extends UiBaseTest {
                 "Папка не была удалена.");
     }
 
-    @AfterSuite
+    @AfterMethod
     public void deleteResources() {
         Boolean flag = true;
         do {
@@ -144,15 +145,18 @@ public class ContextMenuTest extends UiBaseTest {
                 flag = false;
             }
         } while (flag);
-        goToPage(getDriver(), FILES_PAGE_URL + "/" + "Folder");
+        goToPage(getDriver(), FILES_PAGE_URL + "/" + "Загрузки");
         do {
-            filesOnPage = staticElementsForPage.getFilesOnPage();
-            if (staticElementsForPage.isListContainsElement(filesOnPage, workFolder)) {
-                workElement = findStaticElements.getElementContainsName(workFolder);
-                workElement.click();
-                contextMenuElements.clickButtonDelete();
-            } else {
-                flag = true;
+            try {
+                filesOnPage = staticElementsForPage.getFilesOnPage();
+                if (staticElementsForPage.isListContainsElement(filesOnPage, workFolder)) {
+                    workElement = findStaticElements.getElementContainsName(workFolder);
+                    workElement.click();
+                    contextMenuElements.clickButtonDelete();
+                } else {
+                    flag = true;
+                }
+            } catch (Exception ex) {
             }
         } while (!flag);
     }

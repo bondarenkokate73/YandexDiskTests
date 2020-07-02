@@ -49,7 +49,6 @@ public class UiBaseTest {
     @BeforeMethod
     public final void setEnvironment() throws IOException {
         driver = createDriver();
-        //     driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         staticElementsForPage = new StaticElementsForPage(getDriver());
         findStaticElements = new FindStaticElements(getDriver());
         contextMenuElements = new ContextMenuElements(getDriver());
